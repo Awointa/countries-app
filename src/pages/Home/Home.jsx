@@ -1,10 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Card from "../../components/ui/Card/Card";
 
 import { DataContext } from "../../contexts/DataContext";
 
 const Home = () => {
   const { countries, handleClicked, error, isLoaded } = useContext(DataContext);
+
+  // the search form query is set  to empty
+  const [q, setQ] = useState(" ");
+  const [searchParam] = useState(["name"]);
+
+  // To search for the regions
+  const [filterParam, setFilterParam] = useState("All");
+
+  const search = (countries) => {
+    return countries.filter((country) => {
+      if (country.region == filterParam) {
+        return (
+          searchParam
+            .some((countryName) => country[countryName])
+            .toString()
+            .toLowerCase()
+            .indexOf(q.toLowerCase()) > -1
+        );
+      } else if (country.region == "All") {
+        return (
+          searchParam
+            .some((countryName) => country[countryName])
+            .toString()
+            .toLowerCase()
+            .indexOf(q.toLowerCase()) > -1
+        );
+      }
+    });
+  };
+
+  console.log(search(countries));
+
   if (error) {
     return <>{error.message}</>;
   } else if (!isLoaded) {
@@ -27,25 +59,29 @@ const Home = () => {
               type="search"
               name="search-form"
               placeholder="Search for a country..."
-              // value={}
+              value={q}
               className="border-none w-full py-4 px-14 shadow-md"
+              onChange={(e) => setQ(e.target.value)}
             />
           </div>
           <select
             name="region"
             id="region-select"
             className="text-veryDarkBlue font-light  bg-white shadow-md p-4 text-center w-[50%] focus:border-darkBlue"
+            onChange={(e) => {
+              setFilterParam(e.target.value);
+            }}
           >
-            <option>Filter by Region</option>
-            <option value="africa">Africa</option>
-            <option value="america">America</option>
-            <option value="asia">Asia</option>
-            <option value="europe">Europe</option>
-            <option value="ocenia">Oceania</option>
+            <option value="All">Filter by Region</option>
+            <option value="Africa">Africa</option>
+            <option value="America">America</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Ocenia">Oceania</option>
           </select>
         </div>
         <div className="mx-10 my-14  grid grid-auto-rows gap-10 ">
-          {countries.map((country, i) => {
+          {search(countries).map((country, i) => {
             return (
               <Card
                 country={country}

@@ -39,7 +39,7 @@ const CountryDetails = () => {
         <img src={flag} alt="" />
         <div className="mt-10 flex flex-col gap-7">
           <div className="text-xl font-black">{name}</div>
-          <ul className="mt-3">
+          <ol className="mt-3">
             <li className="font-semibold mb-1">
               Native Name: <span className="font-normal">{nativeName}</span>
             </li>
@@ -55,8 +55,8 @@ const CountryDetails = () => {
             <li className="font-semibold mb-1">
               capital: <span className="font-normal">{capital}</span>
             </li>
-          </ul>
-          <ul>
+          </ol>
+          <ol>
             <li className="font-semibold mb-1">
               Top Level Domain: <span className="font-normal">{topLevelDomain}</span>
             </li>
@@ -66,7 +66,7 @@ const CountryDetails = () => {
             <li>
               {/* Language: <span>{selectedCountry.languages.join(" ")}</span> */}
             </li>
-          </ul>
+          </ol>
         </div>
         <div>{/* Border Countries: <Button></Button> <Button></Button> */}</div>
       </div>

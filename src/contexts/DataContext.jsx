@@ -10,6 +10,7 @@ const DataContextProvider = (props) => {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState({});
 
+
   useEffect(() => {
     axios
       .get("http://127.0.0.1:5173/api/countries")
@@ -20,11 +21,16 @@ const DataContextProvider = (props) => {
   const handleClicked = (country) => {
     setSelectedCountry({ country: country });
   };
-; 
 
   return (
     <DataContext.Provider
-      value={{ countries, selectedCountry, error, isLoaded, handleClicked }}
+      value={{
+        countries,
+        selectedCountry,
+        error,
+        isLoaded,
+        handleClicked,
+      }}
     >
       {props.children}
     </DataContext.Provider>
